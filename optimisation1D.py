@@ -1,6 +1,8 @@
+import matplotlib.pyplot as plt
 import numpy as np
+import os
 import pandas as pd
-from math import log10, sqrt
+from math import sqrt
 from pprint import pprint
 
 
@@ -68,6 +70,20 @@ def main():
         results.append((tol, ibIter, gssIter))
 
     df = pd.DataFrame(results, columns = ['tol', 'ibIter', 'gssIter'])
+    # log10 transformations
+    df['tol_log'] = np.log10(df['tol'])
+    df['ibIter_log'] = np.log10(df['ibIter'])
+    df['gssIter_log'] = np.log10(df['gssIter'])
+
+    # plot
+    plt.plot('tol_log', 'ibIter_log', data = df, marker = 'o', markersize = 1, color = '#0000ff', label = 'Interval bisection')
+    plt.plot('tol_log', 'gssIter_log', data = df, marker = 'o', markersize = 1, color = '#ff0000', label = 'GSS')
+    plt.title('log10 iterations vs log10 tolerance in the range [' + str(np.round(low, 3)) + ', ' + str(np.round(high, 3)) + ']')
+    plt.xlabel('log10 tolerance')
+    plt.ylabel('log10 iterations')
+    plt.legend()
+    plt.savefig(os.getcwd() + '\\Graphs\\optimisation1D')  # save in 'Graphs' dir
+    plt.close()
 
     pprint(df)
 
