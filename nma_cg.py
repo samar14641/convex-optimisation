@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-from pprint import pprint
 from scipy.optimize import minimize
 
 
@@ -22,10 +21,10 @@ def main():
         for y in v2:
             v = np.array([x, y])
 
-            res = minimize(p, v, method = 'nelder-mead', options = {'maxiter': 5})
+            res = minimize(p, v, method = 'nelder-mead', options = {'maxiter': 5})  # nelder-mead
             nm_z.append(np.linalg.norm(res.x - vMin))  # calculate Euclidean dist from [1, 1]
 
-            res = minimize(p, v, method = 'CG', options = {'maxiter': 5})
+            res = minimize(p, v, method = 'CG', options = {'maxiter': 5})  # conjugate gradient
             cg_z.append(np.linalg.norm(res.x - vMin))  # calculate Euclidean dist from [1, 1]
 
         nmZ.append(nm_z)
